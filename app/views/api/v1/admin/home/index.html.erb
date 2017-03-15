@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ambulance Api V1 admin</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag :all %>
+  <%= javascript_include_tag 'rails.validations' %>
+</head>
+<body>
+
+<%- if admin_signed_in? %>
+  <p>Hello <%= current_admin.email %><br />
+  <%= link_to  "sign out as admin", destroy_admin_session_path, method: :delete %>
+<%- else %>
+  <p>
+    <%= link_to 'Sign in', new_admin_session_path %>
+  </p>
+<%- end %>
+<div class="leftcol">
+<%= link_to 'User', api_v1_admin_users_url(@users) %><br><br>
+<%= link_to 'Bookings', api_v1_admin_bookings_url(@bookings) %><br><br>
+<%= link_to 'Vendor', admin_vendors_url(@vendors) %><br><br>
+<%= link_to 'Vehicle', admin_vehicles_url(@vehicles) %> <br><br>
+<%= link_to 'Driver', admin_drivers_url(@drivers) %> <br><br>
+<%= link_to 'Addon', api_v1_admin_addons_url(@addons) %> 
+</div>
+<div class="rightcol">
+Hello Admin.....
+</div>
+
+</body>
+</html>

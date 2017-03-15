@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ambulanceforce</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%#= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag 'rails.validations' %>
+   <%= javascript_include_tag 'autocomplete-rails.js' %>
+   <%#= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", "rails.jquery.js", "application.js" %>
+
+
+<script type="text/javascript">
+jQuery(function($) {
+  // when the #country field changes
+  $("#booking_vendor_id").change(function() {
+    //alert("hi")
+    // make a POST call and replace the content
+    var vendor_id = $('select#booking_vendor_id :selected').val();
+     //alert(vendor_id)
+    if(vendor_id == "") vendor_id="0";
+
+    $("#booking_driver_id").empty();
+    $("#booking_vehicle_id").empty();
+
+    
+    jQuery.get('/admin/drivers/select_drivers/' + vendor_id+".json", function(data){
+        $.each(data, function(key, val) {
+         $("#booking_driver_id").append('<option value="' + val.id + '">' + val.name + '</option>');
+       
+});
+
+    })
+    jQuery.get('/admin/vehicles/select_vehicles/' + vendor_id+".json", function(data){
+        $.each(data, function(key, val) {
+         $("#booking_vehicle_id").append('<option value="' + val.id + '">' + val.number + '</option>');
+       
+});
+
+    })
+    return false;
+  });
+
+})
+</script>
+</head>
+<body>
+
+
+<%= yield %>
+
+</body>
+</html>

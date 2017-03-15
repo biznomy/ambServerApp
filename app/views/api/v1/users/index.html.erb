@@ -1,0 +1,66 @@
+        <div class="row-fluid sortable ui-sortable"> 
+        <div style="" class="box span12">
+          <div class="box-header" data-original-title="">
+            <h2><i class="icon-user"></i><span class="break"></span>Users</h2>
+            <div class="box-icon">
+              <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
+              <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
+              <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+            </div>
+          </div>
+          <div class="box-content">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper" role="grid"><div class="row-fluid"><div class="span3"><%#=link_to 'Export User', '/admin/users.csv'%><%#=link_to "Printable (PDF)", '/admin/users.pdf' %></div>
+            <div class="span3"><%= link_to 'New user', new_admin_user_path,:class=>"btn btn-info btn-setting" %></div>
+
+            <div class="span6"><div id="DataTables_Table_0_filter" class="dataTables_filter">
+            <%= form_tag(@user, :method => "get", class: "navbar-form", id: "search-form") do %>
+                <div class="input-append">
+                  <label>Search:<%= text_field_tag :search, params[:search], placeholder: "Search email" %></label>
+                </div>
+              <% end %>
+
+
+            </div></div></div>
+
+
+            <table aria-describedby="DataTables_Table_0_info" id="DataTables_Table_0" class="table table-striped table-bordered bootstrap-datatable datatable dataTable">
+              <thead>
+                <tr role="row">
+                <th aria-label="Username: activate to sort column descending" aria-sort="ascending" style="width: 200px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" role="columnheader" class="sorting_asc">Full Name</th>
+                <th aria-label="Date registered: activate to sort column ascending" style="width: 187px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" role="columnheader" class="sorting">Email</th>
+                <th aria-label="Role: activate to sort column ascending" style="width: 101px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" role="columnheader" class="sorting">address</th>
+                <th aria-label="Status: activate to sort column ascending" style="width: 303px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" role="columnheader" class="sorting">Medical History</th>
+                <th aria-label="Actions: activate to sort column ascending" style="width: 200px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" role="columnheader" class="sorting">Actions</th></tr>
+              </thead>   
+              
+            <tbody aria-relevant="all" aria-live="polite" role="alert">
+            <% @users.each do |user| %>
+            <tr class="odd">
+                <td class="  sorting_1"><%= user.userprofile.full_name %></td>
+                <td class="center "><%= user.email %></td>
+                <td class="center "><%= user.userprofile.address %></td>
+                <td class="center "> <%= user.userprofile.medical_info %></td>
+                <td class="center ">
+                <%= link_to({:controller=>:users,:action=>:show, :id=>user},:class =>"btn btn-success") do  %><i class="icon-zoom-in icon-white"></i>  <% end %> 
+                <%= link_to  edit_admin_user_path(user),:class =>"btn btn-info" do %><i class="icon-edit icon-white"></i> <% end %>                                           
+                <%= link_to({:controller=>:users,:action=>:destroy, :id=>user}, method: :delete, data: { confirm: 'Are you sure?' },:class=>"btn btn-danger")  do %>  
+                  
+                    <i class="icon-trash icon-white"></i> 
+                  <% end %>
+                </td>
+              </tr>
+              <% end %>
+              </tbody>
+              </table>
+              <div class="row-fluid">
+              <div class="span12 center">
+              <div class="dataTables_paginate paging_bootstrap pagination">
+              <%= will_paginate @users %>
+              </div>
+              </div>
+              </div>
+              </div>            
+          </div>
+        </div><!--/span-->
+      </div>
+      

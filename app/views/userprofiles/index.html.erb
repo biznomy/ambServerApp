@@ -1,0 +1,29 @@
+<h1>Listing userprofiles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Full name</th>
+      <th>Medical info</th>
+      <th>Address</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @userprofiles.each do |userprofile| %>
+      <tr>
+        <td><%= userprofile.full_name %></td>
+        <td><%= userprofile.medical_info %></td>
+        <td><%= userprofile.address %></td>
+        <td><%= link_to 'Show', userprofile %></td>
+        <td><%= link_to 'Edit', edit_userprofile_path(userprofile) %></td>
+        <td><%= link_to 'Destroy', userprofile, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Userprofile', new_userprofile_path %>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ambulanceforce admin</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+  <%#= javascript_include_tag :defaults %>
+  <%#= javascript_include_tag 'rails.validations' %>
+   <%= javascript_include_tag 'autocomplete-rails.js' %>
+   <%#= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" %>
+
+
+<script type="text/javascript">
+jQuery(function($) {
+  // when the #country field changes
+  $("#booking_vendor_id").change(function() {
+  	//alert("hi")
+    // make a POST call and replace the content
+    var vendor_id = $('select#booking_vendor_id :selected').val();
+     //alert(vendor_id)
+    if(vendor_id == "") vendor_id="0";
+
+    $("#booking_driver_id").empty();
+    $("#booking_vehicle_id").empty();
+
+    
+    jQuery.get('/admin/drivers/select_drivers/' + vendor_id+".json", function(data){
+        $.each(data, function(key, val) {
+          //alert(val);
+         $("#booking_driver_id").append('<option value="' + val.id + '">' + val.name + '</option>');
+       
+});
+
+    })
+    jQuery.get('/admin/vehicles/select_vehicles/' + vendor_id+".json", function(data){
+
+        $.each(data, function(key, val) {
+          //alert(val);
+         $("#booking_vehicle_id").append('<option value="' + val.id + '">' + val.number + '</option>');
+       
+});
+
+    })
+    return false;
+  });
+
+})
+</script>
+
+</head>
+<body>
+    <div id="overlay">
+    <ul>
+      <li class="li1"></li>
+      <li class="li2"></li>
+      <li class="li3"></li>
+      <li class="li4"></li>
+      <li class="li5"></li>
+      <li class="li6"></li>
+    </ul>
+  </div>   
+  <!-- start: Header -->
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="/admin"> <%#= image_tag 'img/Ambulanceforce App.png'%> <span class="">Ambulance App</span></a>
+                
+        <!-- start: Header Menu -->
+        <div class="nav-no-collapse header-nav">
+          <ul class="nav pull-right">
+            <li class="dropdown hidden-phone">
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="icon-warning-sign icon-white"></i> <span class="label label-important hidden-phone">1</span> 
+              </a>
+              <ul class="dropdown-menu notifications">
+                <li>
+                  <span class="dropdown-menu-title">You have 1 notifications</span>
+                </li> 
+                              <li>
+                                    <a href="#">
+                    + <i class="icon-user"></i> <span class="message">New user registration</span> <span class="time">1 min</span> 
+                                    </a>
+                                </li>
+                
+              </ul>
+            </li>
+            <!-- start: Notifications Dropdown -->
+            
+            <!-- end: Notifications Dropdown -->
+            <!-- start: Message Dropdown -->
+            
+            <!-- end: Message Dropdown -->
+           
+            <!-- start: User Dropdown -->
+            <li class="dropdown">
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="icon-user icon-white"></i>
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%- if admin_signed_in? %> 
+               <%= link_to  destroy_admin_session_path, method: :delete do %><i class="icon-off"></i> Logout <% end %><%- end %></li>
+              </ul>
+            </li>
+            <!-- end: User Dropdown -->
+          </ul>
+        </div>
+        <!-- end: Header Menu -->
+        
+      </div>
+    </div>
+  </div>
+  <!-- start: Header -->
+  
+    <div class="container-fluid">
+    <div class="row-fluid">
+        
+      <!-- start: Main Menu -->
+      <div class="span2 main-menu-span">
+        <div class="nav-collapse sidebar-nav">
+          <ul class="nav nav-tabs nav-stacked main-menu">
+          <% if current_admin.role =='vendor' %>
+
+            <li><%= link_to "/admin/vendors/#{current_admin.id}/edit" do %><i class="icon-home icon-white"></i><span class="hidden-tablet"> Myprofile</span><% end %></li>
+            <li><%= link_to admin_bookings_url do %><i class="icon-edit icon-white"></i><span class="hidden-tablet"> Booking</span><% end %></li>
+            <li><%= link_to admin_vehicles_url do %><i class="icon-folder-open icon-white"></i><span class="hidden-tablet"> Vehicle</span><% end %></li>
+           <li><%= link_to admin_drivers_url do %><i class="icon-star icon-white"></i><span class="hidden-tablet"> Driver</span><% end %></li>
+    
+            <% else %>
+           <li><%= link_to admin_users_url do %><i class="icon-home icon-white"></i><span class="hidden-tablet"> User</span><% end %></li>
+           <li><%= link_to admin_bookings_url do %><i class="icon-edit icon-white"></i><span class="hidden-tablet"> Booking</span><% end %></li>
+           <li><%= link_to admin_vendors_url do %><i class="icon-align-justify icon-white"></i><span class="hidden-tablet"> Vendor</span><% end %></li>
+           <li><%= link_to admin_accounts_url do %><i class="icon-th icon-white"></i><span class="hidden-tablet"> Accounts</span><% end %></li>
+           <!--<li><%#= link_to admin_vehicles_url do %><i class="icon-folder-open icon-white"></i><span class="hidden-tablet"> Vehicle</span><%# end %></li>
+           <li><%#= link_to admin_drivers_url do %><i class="icon-star icon-white"></i><span class="hidden-tablet"> Driver</span><%# end %></li>
+           <li><%#= link_to admin_addons_url do %><i class="icon-star icon-white"></i><span class="hidden-tablet"> Addon</span><%# end %></li>-->
+
+
+            <% end %>
+            <% if current_admin.role=='vendor' %>
+            <%= image_tag current_admin.vendor.avatar.url(:thumb) %>
+            <br>
+            <p style="color:#fff"><b>Welcome to:</b><%= current_admin.vendor.name %></p>
+            <% end%>
+          </ul>
+        </div><!--/.well -->
+      </div><!--/span-->
+      <!-- end: Main Menu -->
+      
+      <noscript>
+        <div class="alert alert-block span10">
+          <h4 class="alert-heading">Warning!</h4>
+          <p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
+        </div>
+      </noscript>
+      
+      <div id="content" class="span10" style="min-height:638px;margin-top:0px;">
+       
+      <%= yield %>
+      
+      </div><!--/#content.span10-->
+        </div><!--/fluid-row-->
+        
+    <div class="modal hide fade" id="myModal">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Settings</h3>
+      </div>
+      <div class="modal-body">
+        <p>Here settings can be configured...</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <a href="#" class="btn btn-primary">Save changes</a>
+      </div>
+    </div>
+    
+    <div class="clearfix"></div>
+    
+    <footer>
+      <p>
+        <span style="text-align:left;float:left">&copy; <a href="#">ambulanceforce app</a> 2014</span>
+        
+      </p>
+
+    </footer>
+        
+  </div><!--/.fluid-container-->
+
+  <!-- start: JavaScript-->
+
+    
+   
+
+</body>
+</html>

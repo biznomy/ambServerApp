@@ -1,0 +1,14 @@
+<h1>Editing vendor</h1>
+
+            <div class="row-fluid">
+            <div class="span2"><%= link_to 'Vehicle', admin_vendor_vehicles_url(@vendor.vendor,@vehicle),:class=>"btn btn-info" %></div>
+            <div class="span2"><%= link_to 'Driver', admin_vendor_drivers_url(@vendor.vendor,@driver),:class=>"btn btn-info" %> </div>
+
+            <div class="span8">
+             </div>
+            
+            </div>
+            
+
+<%= render 'editform' %>
+

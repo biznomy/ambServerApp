@@ -1,0 +1,48 @@
+<%= form_for @vendor, url: {action: "create"},:html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+<div class="row-fluid  ui-sortable">
+<div style="" class="box span12">
+<div class="box-header" data-original-title="">
+            <h2><i class="icon-edit"></i><span class="break"></span>Sign detail</h2>
+            <!--<div class="box-icon">
+              
+              <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+            </div>-->
+          </div>
+  <% if @vendor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vendor.errors.count, "error") %> prohibited this vendor from being saved:</h2>
+
+      <ul>
+      <% @vendor.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="box-content">
+  <fieldset>
+  
+  <div class="control-group">
+  <%= f.label :email,:class=>"control-label" %>
+    <div class="controls">
+  <%= f.email_field :email, autofocus: true,:class=>"span6" %>
+  </div>
+</div>
+  <div class="control-group">
+  <%= f.label :password,:class=>"control-label" %>
+  <div class="controls">
+    <%= f.password_field :password, autocomplete: "off" ,:class=>"span6" %>
+    </div>
+    </div>
+    </fieldset>
+</div>
+</div>
+</div>
+
+          
+ 
+<div class="form-actions">
+  <%= f.submit "Save",:class=>"btn btn-primary" %>
+                
+ 
+<% end %>

@@ -1,0 +1,96 @@
+<%= form_for @vendor, url:admin_vendor_path(@vendor),:html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+<div class="row-fluid  ui-sortable">
+<div style="" class="box span12">
+<div class="box-header" data-original-title="">
+            <h2><i class="icon-edit"></i><span class="break"></span>Sign detail</h2>
+            <!--<div class="box-icon">
+              
+              <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+            </div>-->
+          </div>
+  <% if @vendor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vendor.errors.count, "error") %> prohibited this vendor from being saved:</h2>
+
+      <ul>
+      <% @vendor.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="box-content">
+  <fieldset>
+  
+  <div class="control-group">
+  <%= f.label :email,:class=>"control-label" %>
+    <div class="controls">
+  <%= f.email_field :email, autofocus: true,:class=>"span6" %>
+  </div>
+</div>
+  <!--<div class="control-group">
+  <%#= f.label :password,:class=>"control-label" %>
+  <div class="controls">
+    <%#= f.password_field :password, autocomplete: "off" ,:class=>"span6" %>
+    </div>
+    </div>-->
+    </fieldset>
+</div>
+</div>
+</div>
+
+
+<div class="row-fluid ui-sortable">
+<div style="" class="box span12">
+<div class="box-header" data-original-title="">
+            <h2><i class="icon-edit"></i><span class="break"></span>Profile detail</h2>
+            <!--<div class="box-icon">
+              <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
+              <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
+              <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+            </div>-->
+          </div>
+ <%= f.fields_for :vendor do |vendorprofile_form| %>
+      <div class="box-content">
+      <fieldset>
+      <div class="control-group">
+        <%= vendorprofile_form.label :name,:class=>"control-label" %>
+        <div class="controls">
+        <%= vendorprofile_form.text_field :name,:class=>"span6" %>
+        </div>
+        </div>
+        <div class="control-group">
+        <%= vendorprofile_form.label :Image,:class=>"control-label" %>
+        <div class="controls">
+        <%= vendorprofile_form.file_field :avatar,:class=>"span6" %>
+        </div>
+        </div>
+        <div class="control-group">
+        <%= vendorprofile_form.label :price,:class=>"control-label" %>
+        <div class="controls">
+        <%= vendorprofile_form.text_field :price,:class=>"span6" %>
+        </div>
+        </div>
+        <div class="control-group">
+        <%= vendorprofile_form.label :term_and_condition,:class=>"control-label" %>
+        <div class="controls">
+        <%= vendorprofile_form.text_area :termcondition,:class=>"span6" %>
+        </div>
+        </div>
+        <div class="control-group">
+        <%= vendorprofile_form.label :description,:class=>"control-label" %>
+        <div class="controls">
+        <%= vendorprofile_form.text_area :description,:class=>"span6" %>
+        </div>
+        </div>
+        
+        </fieldset>
+      </div>
+    <% end %>
+<div class="form-actions">
+  <%= f.submit "Save",:class=>"btn btn-primary" %>
+                
+  </div>
+</div>
+</div>
+<% end %>

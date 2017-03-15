@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @booking.date %>
+</p>
+
+<p>
+  <strong>F add:</strong>
+  <%= @booking.fadd1 %>
+</p>
+
+<p>
+  <strong>E add:</strong>
+  <%= @booking.tadd1 %>
+</p>
+<div class="pdf_link">
+    <%= link_to "pdf", booking_path(@booking, :format => "pdf") %>
+  </div>
+<%= link_to 'Edit', edit_booking_path(@booking) %> |
+<%= link_to 'Back', bookings_path %>

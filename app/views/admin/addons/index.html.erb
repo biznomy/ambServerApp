@@ -1,0 +1,63 @@
+
+<div class="row-fluid  ui-sortable"> 
+        <div style="" class="box span12">
+          <div class="box-header" data-original-title="">
+            <h2><i class="icon-user"></i><span class="break"></span>Addons</h2>
+            <div class="box-icon">
+              
+              <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+            </div>
+          </div>
+          <div class="box-content">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper" role="grid"><div class="row-fluid"><div class="span3"></div>
+            <div class="span3"><%= link_to 'New Addon', new_admin_addon_path,:class=>"btn btn-info" %></div>
+
+            <div class="span6"><div id="DataTables_Table_0_filter" class="dataTables_filter">
+            <%= form_tag(@addon, :method => "get", class: "navbar-form", id: "search-form") do %>
+                <div class="input-append">
+                  <label>Search:<%= text_field_tag :search, params[:search], placeholder: "Search addon" %></label>
+                </div>
+              <% end %>
+
+
+            </div></div></div>
+            <%= form_tag destroy_multiple_admin_addons_path, method: :delete do %>
+<table aria-describedby="DataTables_Table_0_info" id="DataTables_Table_0" class="table table-striped table-bordered bootstrap-datatable dataTable">
+              <thead>
+                <tr role="row">
+                <th aria-label="Username: activate to sort column descending" aria-sort="ascending" style="width: 100px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" role="columnheader" class="sorting_asc">Select</th>
+                <th aria-label="Username: activate to sort column descending" aria-sort="ascending" style="width: 200px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" role="columnheader" class="sorting_asc">Name</th>
+                <th aria-label="Actions: activate to sort column ascending" style="width: 200px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" role="columnheader" class="sorting">Actions</th></tr>
+              </thead>   
+              
+            <tbody aria-relevant="all" aria-live="polite" role="alert">
+
+          <% @addons.each do |addon| %>
+            <tr class="odd">
+            <td class="sorting_1"><%= check_box_tag "addons[]", addon.id %></td>
+                <td class="center"><%= addon.name %></td>
+                <td class="center ">
+                <%#= link_to({:controller=>:addons,:action=>:show, :id=>addon},:class =>"btn btn-success") do  %><!--<i class="icon-zoom-in icon-white"></i>-->  <%# end %> 
+                <%= link_to  edit_admin_addon_path(addon),:class =>"btn btn-info" do %><i class="icon-edit icon-white"></i> <% end %>                                           
+                <%= link_to({:controller=>:addons,:action=>:destroy, :id=>addon}, method: :delete, data: { confirm: 'Are you sure?' },:class=>"btn btn-danger")  do %>  
+                    <i class="icon-trash icon-white"></i> 
+                  <% end %>
+                </td>
+              </tr>
+    <% end %>
+  </tbody>
+              </table>
+              <%= submit_tag "Delete selected",:class=>"btn btn-danger" %>
+              <% end %>
+              <div class="row-fluid">
+              <div class="span12 center">
+              <div class="dataTables_paginate paging_bootstrap pagination">
+              <%= will_paginate @addons , :renderer => BootstrapPagination::Rails  %>
+              </div>
+              </div>
+              </div>
+              </div>            
+          </div>
+        </div><!--/span-->
+      </div>
+      

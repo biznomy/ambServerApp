@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @driver.driverprofile.name %>
+</p>
+<% if params[:vendor_id].blank? 
+  if current_admin.role =='vendor' %>
+<%= link_to 'Edit', edit_admin_driver_path %> |
+<%= link_to 'Back', admin_drivers_path %>
+<%
+end
+else
+  %>
+<%= link_to 'Edit', edit_admin_vendor_driver_path %> |
+<%= link_to 'Back', admin_vendor_drivers_path %>
+  <% end %>

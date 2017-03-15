@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @vendor.name %>	
+</p>
+
+<%= link_to 'Edit', edit_api_v1_admin_vendor_path(@vendor) %> |
+<%= link_to 'Back', api_v1_admin_vendors_path %>
+
+<div class="left"><%= link_to 'Vehicle', api_v1_admin_vendor_vehicles_url(@vendor,@vehicle) %> </div>
+<div class="right"><%= link_to 'Driver', api_v1_admin_vendor_drivers_url(@vendor,@driver) %> </div>
+

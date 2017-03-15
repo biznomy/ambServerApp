@@ -1,0 +1,261 @@
+<div class="row-fluid ui-sortable">
+        <div style="" class="box span12">
+          <div class="box-header" data-original-title="">
+            <h2><i class="icon-edit"></i><span class="break"></span>Bookings</h2>
+            <!--<div class="box-icon">
+              
+              <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+            </div>-->
+          </div>
+<div class="box-content">
+
+
+<%= form_for([:admin,@booking], :html => { :class => "form-horizontal"}) do |f| %>
+<%= f.autocomplete_field :vendor_name, autocomplete_vendor_name_admin_bookings_path %>
+  <% if @booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+
+      <ul>
+      <% @booking.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<fieldset>
+  <div class="control-group">
+    <%= f.label :date,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.text_field :date,:class=>"span6",:id=>"datetimepicker" %>
+    </div>
+  </div>
+  <%#= f.hidden_field :user_id, :value => current_user.id %>
+  <div class="control-group">
+    <%= f.label :From_Address,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.text_field :fadd1,:class=>"span6" %>
+  </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :From_Additional_Notes,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.text_field :fadd2,:class=>"span6" %>
+  </div>
+  </div>
+  <!--<div class="control-group">
+    <%#= f.label :fadd3,:class=>"control-label" %>
+    <div class="controls">
+    <%#= f.text_field :fadd3,:class=>"span6" %>
+  </div>
+  </div>-->
+  <div class="control-group">
+    <%= f.label :To_Address,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.text_field :tadd1,:class=>"span6" %>
+  </div>
+  </div>
+    <div class="control-group">
+    <%= f.label :To_Additional_Notes,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.text_field :tadd2,:class=>"span6" %>
+    </div>
+  </div>
+  <!--<div class="control-group">
+    <%#= f.label :tadd3,:class=>"control-label" %>
+    <div class="controls">
+    <%#= f.text_field :tadd3,:class=>"span6" %>
+  </div>
+  </div>-->
+
+<% 
+if current_admin.role =="vendor" %>
+  <div class="control-group">
+    <%= f.label :status,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.select( :status, Booking::STATUS_TYPES.map { |s| [I18n.t("status_types.#{s}"), s] }, {}, {:disabled => "disabled" })  %>
+    
+  </div>
+  </div>
+  <% else %>
+<div class="control-group">
+    <%= f.label :status,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.select :status, Booking::STATUS_TYPES.map { |s| [I18n.t("status_types.#{s}"), s] } %>
+  </div>
+  </div>
+  <% end %>
+
+<% 
+if current_admin.role =="vendor" %>
+  <div class="control-group">
+    <%= f.label :vehicle_status,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.select :vehiclestatus, Booking::VEHICLE_TYPES.map { |s| [I18n.t("vehicle_types.#{s}"), s] }, {}, {  :disabled => "disabled" } %>
+  </div>
+  </div>
+  <% else %>
+  <div class="control-group">
+    <%= f.label :vehicle_status,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.select :vehiclestatus, Booking::VEHICLE_TYPES.map { |s| [I18n.t("vehicle_types.#{s}"), s] }%>
+  </div>
+  </div>
+  <% end %>
+  <% if current_admin.role =="vendor" %>
+  <div class="control-group">
+    <%= f.label :break_down_details,:class=>"control-label" %>
+    <div class="controls">
+    <%= @booking.breakdowndetails %>
+  </div>
+  </div>
+  <% else %>
+  <div class="control-group">
+    <%= f.label :break_down_details,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.text_field :breakdowndetails,:class=>"span6" %>
+  </div>
+  </div>
+  <% end %>
+  <% if current_admin.role =="vendor" %>
+  <div class="control-group">
+    <%= f.label :feedback,:class=>"control-label" %>
+    <div class="controls">
+    <%= @booking.feedback %>
+  </div>
+  </div>
+  <% else %>
+  <div class="control-group">
+    <%= f.label :feedback,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.text_field :feedback,:class=>"span6" %>
+  </div>
+  </div>
+  <% end %>
+  <% if current_admin.role =="vendor" %>
+  <div class="control-group">
+    <%= f.label :feedback_rating,:class=>"control-label" %>
+    <div class="controls">
+    <%= @booking.feedbackrating %>
+  </div>
+  </div>
+  <% else %>
+  <div class="control-group">
+    <%= f.label :feedback_rating,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.check_box :feedbackrating %>
+  </div>
+  </div>
+  <% end%>
+<% if current_admin.role =="vendor" %>
+  <div class="control-group">
+    <%= f.label :payment_mode,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.select :paymentmode, Booking::PAYMENT_MODE.map { |s| [I18n.t("payment_mode.#{s}"), s] }, {}, {  :disabled => "disabled" } %>
+  </div>
+  </div>
+  <% else %>
+  <div class="control-group">
+    <%= f.label :payment_mode,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.select :paymentmode, Booking::PAYMENT_MODE.map { |s| [I18n.t("payment_mode.#{s}"), s] } %>
+  </div>
+  </div>
+
+  <% end %>
+  <% if current_admin.role =="vendor" %>
+  <div class="control-group">
+    <%= f.label :price,:class=>"control-label" %>
+    <div class="controls">
+    <%= @booking.price %>
+  </div>
+  </div>
+  <% else %>
+  <div class="control-group">
+    <%= f.label :price,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.text_field :price,:class=>"span6" %>
+  </div>
+  </div>
+  <% end %>
+  <% if current_admin.role =="vendor" %>
+  <div class="control-group">
+    <%= f.label :special_notes,:class=>"control-label" %>
+    <div class="controls">
+    <%= @booking.specialnotes %>
+  </div>
+  </div>
+  <% else %>
+  <div class="control-group">
+    <%= f.label :special_notes,:class=>"control-label" %>
+    <div class="controls">
+    <%= f.text_area :specialnotes,:class=>"span6" %>
+  </div>
+  </div>
+  <% end %>
+
+
+
+  <div class="control-group">
+    <%= f.label :vendor,:class=>"control-label" %>
+    <div class="controls">
+    <% if current_admin.role =='vendor' %>
+    <%= f.select(:vendor_id, Vendor.where(:admin_id=>current_admin.id).collect {|p| [ p.name, p.id ] }, { include_blank: 'select' }) %>
+<% else %>
+<%= f.select(:vendor_id, Vendor.all.collect {|p| [ p.name, p.id ] }, { include_blank: 'select' }) %>
+<% end %>
+  </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :vehicle,:class=>"control-label" %>
+    <div class="controls">
+    <%#= f.select(:vehicle_id, Vehicle.all.collect {|p| [ p.number, p.id ] }, { include_blank: 'select' }) %>
+     <%= f.select(:vehicle_id, Vehicle.where(:vendor_id=>@booking.vendor_id).collect {|p| [ p.number, p.id ] }, { include_blank: 'select' }) %>
+  </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :Driver,:class=>"control-label" %>
+    <div class="controls">
+    <%# binding.pry %>
+    <% if params[:id].blank? %>
+    <%= f.select(:driver_id, Driver.where(:vendor_id=>@booking.vendor_id).collect {|p| [ p.driverprofile.name, p.id ] }, { include_blank: 'select' }) %>
+    <% else %>
+    <%#= binding.pry %>
+       <%= f.select(:driver_id, Driver.where(:vendor_id=>@booking.vendor_id).collect {|p| [ p.driverprofile.name, p.id ] }, { include_blank: 'select' }) %>
+       <% end %>
+
+  </div>
+  </div>
+   <div class="control-group">
+    <%= f.label :user,:class=>"control-label" %>
+
+    <div class="controls">
+    <%= f.select(:user_id, Userprofile.all.collect {|p| [ p.full_name, p.user_id ] }, { include_blank: 'select' }) %>
+  </div>
+  </div>
+  <!--<div class="control-group">
+    <label class="control-label" for="fileInput">Booking Addons</label>    
+  <div class="controls">
+  <label class="checkbox inline">
+  <%#= f.collection_check_boxes(:addon_ids, Addon.all, :id, :name) do |b| %>
+        <%#= b.label class:"checkbox inline" do%>
+         <%#=b.check_box + b.text%>
+        <%#end%>
+    <% #end %>
+  </label>
+  </div>
+  </div>-->
+
+  <div class="form-actions">
+ <%= f.submit "Save",:class=>"btn btn-primary" %>
+  </div>
+</fieldset>
+<% end %>
+</div>
+</div>
+</div>
+<script>
+$('#datetimepicker').datetimepicker({ dateFormat:'yy-mm-dd' });
+
+</script>

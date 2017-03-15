@@ -1,0 +1,13 @@
+<h1>New vehicle</h1>
+
+<%= render 'form' %>
+
+<% if params[:vendor_id].blank? 
+  if current_admin.role =='vendor' %>
+<%= link_to 'Back',  admin_vehicles_path  %>
+<%
+end
+else
+  %>
+<%#= link_to 'Back',  admin_vendor_vehicles_path  %>
+  <% end %>

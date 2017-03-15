@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2014-08-14 16:56:56
+  f_add: MyString
+  e_add: MyString
+
+two:
+  date: 2014-08-14 16:56:56
+  f_add: MyString
+  e_add: MyString

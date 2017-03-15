@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @vehicle.number %>
+</p>
+<% if params[:vendor_id].blank? 
+  if current_admin.role =='vendor' %>
+<%= link_to 'Edit', edit_admin_vehicle_path(@vehicle) %> |
+<%= link_to 'Back', admin_vehicles_path %>
+<%
+end
+else
+  %>
+  <%= link_to 'Edit', edit_admin_vendor_vehicle_path(@vendor,@vehicle) %> |
+<%= link_to 'Back', admin_vendor_vehicles_path %>
+<% end %>

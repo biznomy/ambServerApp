@@ -1,0 +1,47 @@
+<%= form_for(@booking) do |f| %>
+  <% if @booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+
+      <ul>
+      <% @booking.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :date %><br>
+    <%= f.datetime_select :date %>
+    
+  </div>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <div class="field">
+    <%= f.label :f_add %><br>
+    <%= f.text_field :f_add %>
+  </div>
+  <div class="field">
+    <%= f.label :e_add %><br>
+    <%= f.text_field :e_add %>
+  </div>
+  <div class="field">
+    <%= f.label :vendor %><br>
+    <%= f.select(:vendor_id, Vendor.all.collect {|p| [ p.name, p.id ] }, { include_blank: 'select' }) %>
+  </div>
+  <div class="field">
+    <%= f.label :vehicle %><br>
+    <%#= f.select(:vehicle_id, Vehicle.all.collect {|p| [ p.number, p.id ] }, { include_blank: 'select' }) %>
+     <%= f.select(:vehicle_id, Vehicle.where(:vendor_id=>@booking.vendor_id).collect {|p| [ p.number, p.id ] }, { include_blank: 'select' }) %>
+  </div>
+  <div class="field" >
+    <%= f.label :Driver %><br>
+       <%= f.select(:driver_id, Driver.where(:vendor_id=>@booking.vendor_id).collect {|p| [ p.name, p.id ] }, { include_blank: 'select' }) %>
+
+
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

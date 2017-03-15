@@ -1,0 +1,91 @@
+<div class="row-fluid  ui-sortable"> 
+        <div style="" class="box span12">
+          <div class="box-header" data-original-title="">
+            <h2><i class="icon-user"></i><span class="break"></span>drivers</h2>
+            <!--<div class="box-icon">
+              
+              <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+            </div>-->
+          </div>
+          <div class="box-content">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper" role="grid"><div class="row-fluid">
+            <div class="span6"><div id="DataTables_Table_0_filter" class="dataTables_filter">
+            <%= form_tag(@driver, :method => "get", class: "navbar-form", id: "search-form") do %>
+                <div class="input-append">
+                  <label style="line-height:27px!important;">Search:&nbsp;<%= text_field_tag :search, params[:search], placeholder: "Search addon" %></label>
+                </div>
+              <% end %>
+
+
+            </div></div>
+            <div class="span3"></div>
+            <div class="span3">
+              <% if params[:vendor_id].blank? 
+                if current_admin.role =='vendor' %>
+                <%= link_to 'New Driver', new_admin_driver_path,:class=>"btn btn-info",:style=>"margin-top:5px;" %>
+                <%
+              end
+              else
+                %>
+              <%= link_to 'New Driver', new_admin_vendor_driver_path,:class=>"btn btn-info" %>
+              <% end %>
+              </div>
+
+            </div>
+<table aria-describedby="DataTables_Table_0_info" id="DataTables_Table_0" class="table table-striped table-bordered bootstrap-datatable dataTable">
+              <thead>
+                <tr role="row">
+                <th aria-label="Username: activate to sort column descending" aria-sort="ascending" style="width: 200px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" role="columnheader" class="sorting_asc">Vendor Name</th>
+                <th aria-label="Username: activate to sort column descending" aria-sort="ascending" style="width: 200px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" role="columnheader" class="sorting_asc">Driver Name</th>
+                <th aria-label="Username: activate to sort column descending" aria-sort="ascending" style="width: 200px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" role="columnheader" class="sorting_asc">Email</th>
+                <th aria-label="Actions: activate to sort column ascending" style="width: 200px;" colspan="1" rowspan="1" aria-controls="DataTables_Table_0" tabindex="0" role="columnheader" class="sorting">Actions</th></tr>
+              </thead>   
+              
+            <tbody aria-relevant="all" aria-live="polite" role="alert">
+ 
+       <% @drivers.each do |driver| %>
+      <tr class="odd">
+       <td class="sorting_1"><%= driver.vendor.name %></td>
+       <td class="center"><%= driver.driverprofile.name %></td>
+        <td class="center"><%= driver.email %></td>
+        <td class="center ">
+        <% if params[:vendor_id].blank? 
+          if current_admin.role =='vendor' %>
+
+          <%#= link_to({:controller=>:drivers,:action=>:show, :id=>driver},:class =>"btn btn-success") do  %><!--<i class="icon-zoom-in icon-white"></i>-->  <%# end %> 
+
+                <%= link_to({:controller=>:drivers,:action=>:edit, :id=>driver},:class =>"btn btn-info") do %><i class="icon-edit icon-white"></i> <% end %>                                           
+                <%= link_to({:controller=>:drivers,:action=>:destroy, :id=>driver}, method: :delete, data: { confirm: 'Are you sure?' },:class=>"btn btn-danger")  do %>  
+                    <i class="icon-trash icon-white"></i> 
+                  <% end %>
+        <%
+      end
+        else
+             %>
+        <%#= link_to({:controller=>:drivers,:action=>:show, :id=>driver},:class =>"btn btn-success") do  %><!--<i class="icon-zoom-in icon-white"></i>-->  <%# end %> 
+
+                <%= link_to({:controller=>:drivers,:action=>:edit, :id=>driver},:class =>"btn btn-info") do %><i class="icon-edit icon-white"></i> <% end %>                                           
+                <%= link_to({:controller=>:drivers,:action=>:destroy, :id=>driver}, method: :delete, data: { confirm: 'Are you sure?' },:class=>"btn btn-danger")  do %>  
+                    <i class="icon-trash icon-white"></i> 
+                  <% end %>
+        <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<div class="row-fluid">
+              <div class="span12 center">
+              <div class="dataTables_paginate paging_bootstrap pagination">
+              <%= will_paginate @drivers , :renderer => BootstrapPagination::Rails %>
+              </div>
+              </div>
+              </div>
+              </div>            
+          </div>
+        </div><!--/span-->
+      </div>
+

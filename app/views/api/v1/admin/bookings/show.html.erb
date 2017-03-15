@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @booking.date %>
+</p>
+
+<p>
+  <strong>Fadd:</strong>
+  <%= @booking.fadd1 %><%= @booking.fadd2 %><%= @booking.fadd3 %>
+</p>
+
+<p>
+  <strong>T add:</strong>
+  <%= @booking.tadd1 %><%= @booking.tadd2 %><%= @booking.tadd3 %>
+</p>
+
+<%= link_to 'Edit', edit_api_v1_admin_booking_path(@booking) %> |
+<%= link_to 'Back', api_v1_admin_bookings_path %>

@@ -1,0 +1,74 @@
+<%= form_for([:api,:v1,:admin,@booking]) do |f| %>
+  <% if @booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+
+      <ul>
+      <% @booking.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :date %><br>
+    <%= f.datetime_select :date %>
+    
+  </div>
+  <%#= f.hidden_field :user_id, :value => current_user.id %>
+  
+  <div class="field">
+    <%= f.label :fadd1 %><br>
+    <%= f.text_field :fadd1 %>
+  </div>
+  <div class="field">
+    <%= f.label :fadd2 %><br>
+    <%= f.text_field :fadd2 %>
+  </div>
+  <div class="field">
+    <%= f.label :fadd3 %><br>
+    <%= f.text_field :fadd3 %>
+  </div>
+  <div class="field">
+    <%= f.label :tadd1 %><br>
+    <%= f.text_field :tadd1 %>
+  </div>
+  <div class="field">
+    <%= f.label :tadd2 %><br>
+    <%= f.text_field :tadd2 %>
+  </div>
+  <div class="field">
+    <%= f.label :tadd3 %><br>
+    <%= f.text_field :tadd3 %>
+  </div>
+  <div class="field">
+    <%= f.label :vendor %><br>
+    <%= f.select(:vendor_id, Vendor.all.collect {|p| [ p.name, p.id ] }, { include_blank: 'select' }) %>
+  </div>
+  <div class="field">
+    <%= f.label :vehicle %><br>
+    <%#= f.select(:vehicle_id, Vehicle.all.collect {|p| [ p.number, p.id ] }, { include_blank: 'select' }) %>
+     <%= f.select(:vehicle_id, Vehicle.where(:vendor_id=>@booking.vendor_id).collect {|p| [ p.number, p.id ] }, { include_blank: 'select' }) %>
+  </div>
+  <div class="field" >
+    <%= f.label :Driver %><br>
+       <%= f.select(:driver_id, Driver.where(:vendor_id=>@booking.vendor_id).collect {|p| [ p.name, p.id ] }, { include_blank: 'select' }) %>
+
+
+  </div>
+   <div class="field">
+    <%= f.label :user %><br>
+    <%= f.select(:user_id, Userprofile.all.collect {|p| [ p.full_name, p.user_id ] }, { include_blank: 'select' }) %>
+  </div>
+
+  <h2>Booking Addon:</h2>
+        
+ 
+  <%= f.collection_check_boxes(:addon_ids, Addon.all, :id, :name ) %>
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

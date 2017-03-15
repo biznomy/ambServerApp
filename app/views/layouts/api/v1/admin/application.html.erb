@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ambulanceforce api v1 admin</title>
+  <%= stylesheet_link_tag    'admin/application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'admin/application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag 'admin/rails.validations' %>
+   <%= javascript_include_tag 'autocomplete-rails.js' %>
+   <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", "rails.jquery.js", "application.js" %>
+
+
+<script type="text/javascript">
+jQuery(function($) {
+  // when the #country field changes
+  $("#booking_vendor_id").change(function() {
+  	//alert("hi")
+    // make a POST call and replace the content
+    var vendor_id = $('select#booking_vendor_id :selected').val();
+     //alert(vendor_id)
+    if(vendor_id == "") vendor_id="0";
+
+    $("#booking_driver_id").empty();
+    $("#booking_vehicle_id").empty();
+
+    
+    jQuery.get('/admin/drivers/select_drivers/' + vendor_id+".json", function(data){
+        $.each(data, function(key, val) {
+         $("#booking_driver_id").append('<option value="' + val.id + '">' + val.name + '</option>');
+       
+});
+
+    })
+    jQuery.get('/admin/vehicles/select_vehicles/' + vendor_id+".json", function(data){
+        $.each(data, function(key, val) {
+         $("#booking_vehicle_id").append('<option value="' + val.id + '">' + val.number + '</option>');
+       
+});
+
+    })
+    return false;
+  });
+
+})
+</script>
+
+</head>
+<body>
+<%- if admin_signed_in? %>
+  <p>Hello <%= current_admin.email %><br />
+  <%= link_to  "sign out as admin", destroy_admin_session_path, method: :delete %>
+<%- else %>
+  <p>
+    <%= link_to 'Sign in', new_admin_session_path %>
+  </p>
+<%- end %>
+<div class="leftcol">
+<%= link_to 'User', api_v1_admin_users_url(@users) %><br><br>
+<%= link_to 'Bookings', api_v1_admin_bookings_url(@bookings) %><br><br>
+<%= link_to 'Vendor', api_v1_admin_vendors_url(@vendors) %><br><br>
+<%= link_to 'Vehicle', admin_vehicles_url(@vehicles) %>	<br><br>
+<%= link_to 'Driver', admin_drivers_url(@drivers) %> <br><br>
+<%= link_to 'Addon', api_v1_admin_addons_url(@addons) %> 
+</div>
+<div class="rightcol">
+
+
+<%= yield %>
+</div>
+</body>
+</html>

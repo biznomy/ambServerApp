@@ -1,0 +1,40 @@
+<%= form_tag(@user, :method => "get", class: "navbar-form", id: "search-form") do %>
+    <div class="input-append">
+      <%= text_field_tag :search, params[:search], class: "span2", placeholder: "Search email" %>
+      <button class="btn" type="submit">Search<i class="icon-search"></i></button>
+    </div>
+  <% end %>
+
+<h1>Listing User</h1>
+
+<table>
+  <thead>
+    <tr>
+    <th>Full Name</th>
+      <th>Email</th>
+      <th>address</th>
+      <th>Medical History</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+      <td>
+      <%= user.userprofile.full_name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.userprofile.address %></td>
+        <td><%= user.userprofile.medical_info %></td>
+        <td><%= link_to("Show", {:controller=>:users,:action=>:show, :id=>user}) %></td>
+        <td><%= link_to 'Edit', edit_api_v1_admin_user_path(user) %></td>
+        <td><%= link_to 'Destroy', {:controller=>:users,:action=>:destroy, :id=>user}, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New user', new_api_v1_admin_user_path %>
+<%= will_paginate @users %>

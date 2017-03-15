@@ -1,0 +1,72 @@
+<%= form_tag(@booking, :method => "get", class: "navbar-form", id: "search-form") do  %>
+<%#= text_field_tag :search, params[:search], class: "span2", placeholder: "Search Articles" %>
+    <div class="input-append">
+      from Date :
+<%= text_field_tag :f_date, params[:f_date], class: "span2", placeholder: "Search date"  %></br>
+
+To Date :
+<%= text_field_tag :to_date, params[:to_date], class: "span2", placeholder: "Search "  %>
+<br>
+Vendor ;
+ <%= select_tag :vendor_id, options_from_collection_for_select(Vendor.all, :id, :name, params[:vendor_id]), :prompt => "Please select"   %>
+
+ <br>
+Vehicle ;
+ <%= select_tag :vehicle_id, options_from_collection_for_select(Vehicle.all, :id, :number, params[:vehicle_id]), :prompt => "Please select"   %>
+
+ <br>
+Driver ;
+ <%= select_tag :driver_id, options_from_collection_for_select(Driver.all, :id, :name, params[:vehicle_id]), :prompt => "Please select"   %>
+  
+      <!-- In order to have the "search" icon int the button, we need to use plain HTML instead 
+           of using a Rails form helper -->
+      <button class="btn" type="submit" value="Search" “commit=Search”><i class="icon-search"></i>Search</button>
+    </div>
+  <% end %>
+<h1>Listing bookings</h1>
+
+<table>
+  <thead>
+    <tr>
+    <th>name</th>
+      <th>Date</th>
+      <th>F add</th>
+      <th>T add</th>
+      <th>Name</th>
+      <th>Vendor </th>
+      <th>Driver</th>
+      <th>Vehicle </th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bookings.each do |booking| %>
+      <tr>
+      
+        <td><%= booking.date %></td>
+        <td><%= booking.fadd1 %><%= booking.fadd2 %><%= booking.fadd3 %></td>
+        <td><%= booking.tadd1 %><%= booking.tadd2 %><%= booking.tadd3 %></td>
+        <td><%= booking.user.userprofile.full_name %></td>
+        <td><%= booking.vendor.name %></td>
+        <td><%= booking.driver.name %></td>
+        <td><%= booking.vehicle.number %></td>
+         <td> 
+        <% booking.addons.each do |addon| %>
+       
+        <%= addon.name %>
+        <% end %> 
+        </td>
+
+         <td><%= link_to("Show", {:controller=>:bookings,:action=>:show, :id=>booking}) %></td>
+        <td><%= link_to 'Edit', edit_api_v1_admin_booking_path(booking) %></td>
+        <td><%= link_to 'Destroy', {:controller=>:bookings,:action=>:destroy, :id=>booking}, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Booking', new_api_v1_admin_booking_path %>
+<%= will_paginate @bookings %>
