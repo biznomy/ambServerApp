@@ -1,28 +1,45 @@
-== README
+# [Ambulance App -"Uber for ambulance"](http://www.technolabs.in/showcase/ambulanceapp)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+![Ambulance App](/docs/aa0002.jpg "Ambulance App")
 
-Things you may want to cover:
+Ambulance app is "Uber for ambulance" app which helps in booking, tracking and payments of ambulance. It also provides ambulance drivers with own app for managing bookings.
 
-* Ruby version
+## Disclaimer
+Please note that shared code is only for portfolio demonstration and learning purposes only. By no means, its final working version of system. We have shared Alpha version(code) of system after approval from our client.
 
-* System dependencies
+## User App Features
++ User registration and profile creation
++ Preferred vendors selection
++ Easy ambulance booking
++ Select ambulance on basis of rating and other parameters
++ Payments to ambulance
++ Track ambulance
++ Notification and alerts
++ Review and feedback
 
-* Configuration
+## Driver App Features
++ View own bookings
++ Manage own booking
++ Start tracker and iteract with clients
 
-* Database creation
+## Admin UI & Server Features
++ Manage all users
++ Manage all bookings
++ Manage various vendors, pricing 
++ Manage master data 
++ Manage orders, payments, refund etc.
 
-* Database initialization
+![Ambulance App](/docs/Slide4.png "Ambulance App")
 
-* How to run the test suite
+![Ambulance App](/docs/aa0002.jpg "Ambulance App")
 
-* Services (job queues, cache servers, search engines, etc.)
+![Ambulance App](/docs/aa0003.jpg "Ambulance App")
 
-* Deployment instructions
+![Ambulance App](/docs/aa0005.jpg "Ambulance App")
 
-* ...
+![Ambulance App](/docs/aa0008.jpg "Ambulance App")
+
+![Ambulance App](/docs/aa0009.jpg "Ambulance App")
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+
